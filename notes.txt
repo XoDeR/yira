@@ -1,0 +1,2 @@
+NextJS version: 14.2.14
+ShadCN version: 2.1.0
