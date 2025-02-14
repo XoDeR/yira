@@ -1,0 +1,1 @@
+export const AUTH_COOKIE = "amstel-tech-yira-session";
