@@ -5,6 +5,7 @@ import { deleteCookie, setCookie } from "hono/cookie";
 import { loginSchema, registerSchema } from "../schemas";
 import { createAdminClient } from "@/lib/appwrite";
 import { AUTH_COOKIE } from "../constants";
+import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
   .post(
@@ -48,7 +49,10 @@ const app = new Hono()
     })
   .post(
     "/logout",
+    sessionMiddleware,
     (c) => {
+      const account = c.get("account");
+
       deleteCookie(c, AUTH_COOKIE);
 
       return c.json({ success: true });
