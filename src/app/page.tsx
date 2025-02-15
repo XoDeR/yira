@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCurrent } from "@/features/auth/api/use-current";
 import { useLogout } from "@/features/auth/api/use-logout";
+import { UserButton } from "@/features/auth/components/user-button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -20,6 +21,7 @@ export default function Home() {
 
   return (
     <div>
+      <UserButton />
       Only visible to authorized users.
       <Button onClick={() => mutate()}>Logout</Button>
       <div className="flex gap-4 pb-4">
