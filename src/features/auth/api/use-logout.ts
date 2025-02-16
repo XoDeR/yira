@@ -16,8 +16,7 @@ export const useLogout = () => {
       return await response.json();
     },
     onSuccess: () => {
-      // force refetch of current user
-      queryClient.invalidateQueries({ queryKey: ["current"] });
+      window.location.reload();
     }
   });
 
