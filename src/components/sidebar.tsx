@@ -5,7 +5,7 @@ import { Navigation } from "./navigation"
 
 export const Sidebar = () => {
   return (
-    <aside className="h-full w-full bg-neurtal-100 p-4">
+    <aside className="h-full w-full bg-neutral-100 p-4">
       <Link href="/">
         <Image src="/logo.svg" alt="logo" width={70} height={40} />
       </Link>
