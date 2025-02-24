@@ -17,9 +17,19 @@ const app = new Hono()
       [Query.equal("userId", user.$id)]
     );
 
+    if (members.total === 0) {
+      return c.json({ data: { documents: [], total: 0 } });
+    }
+
+    const workspaceIds = members.documents.map((member) => member.workspaceId);
+
     const workspaces = await databases.listDocuments(
       DATABASE_ID,
       WORKSPACES_ID,
+      [
+        Query.orderDesc("$createdAt"),
+        Query.contains("$id", workspaceIds)
+      ],
     );
 
     return c.json({ data: workspaces });
