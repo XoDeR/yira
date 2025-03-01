@@ -17,7 +17,7 @@ import {
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useUpdateWorkspace } from "../api/use-create-workspace";
+import { useUpdateWorkspace } from "../api/use-update-workspace";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
 import { ArrowLeftIcon, ImageIcon } from "lucide-react";
