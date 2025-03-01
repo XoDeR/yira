@@ -91,7 +91,7 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
       param: { workspaceId: initialValues.$id },
     }, {
       onSuccess: () => {
-
+        router.refresh();
       },
     });
   }
