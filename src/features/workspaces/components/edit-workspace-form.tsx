@@ -95,6 +95,8 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
     }
   }
 
+  const fullInviteLink = `${window.location.origin}/workspaces/${initialValues.$id}/join/${initialValues.inviteCode}`;
+
   return (
     <div className="flex flex-col gap-y-4">
       <DeleteDialog />
@@ -230,6 +232,26 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
               </div>
             </form>
           </Form>
+        </CardContent>
+      </Card>
+      <Card className="w-full h-full border-none shadow-none">
+        <CardContent className="p-7">
+          <div className="flex flex-col">
+            <h3 className="font-bold">Invite Members</h3>
+            <p className="text-sm text-muted-foreground">
+              Deleting a workspace is irreversible and will remove all associated data
+            </p>
+            <Button
+              className="mt-6 w-fit ml-auto"
+              size="sm"
+              variant="destructive"
+              type="button"
+              disabled={isPending || isDeletingWorkspace}
+              onClick={handleDelete}
+            >
+              Delete Workspace
+            </Button>
+          </div>
         </CardContent>
       </Card>
       <Card className="w-full h-full border-none shadow-none">
