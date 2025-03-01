@@ -65,7 +65,8 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
       param: { workspaceId: initialValues.$id },
     }, {
       onSuccess: () => {
-        router.push("/");
+        // hard refresh with clearing cache
+        window.location.href = "/";
       },
     });
   }
@@ -243,7 +244,7 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
               size="sm"
               variant="destructive"
               type="button"
-              disabled={isPending}
+              disabled={isPending || isDeletingWorkspace}
               onClick={handleDelete}
             >
               Delete Workspace
