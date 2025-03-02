@@ -50,9 +50,11 @@ export const MembersList = () => {
     const ok = await confirm();
     if (!ok) return;
 
-    deleteMember({ param: { memberId } }, {
+    deleteMember({
+      param: { memberId },
+    }, {
       onSuccess: () => {
-        window.location.reload(),
+        window.location.reload();
       },
     });
   }
