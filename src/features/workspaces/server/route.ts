@@ -235,7 +235,7 @@ const app = new Hono()
       );
 
       if (workspace.inviteCode !== code) {
-        return c.json({ error: "Invalid invite code" });
+        return c.json({ error: "Invalid invite code" }, 400);
       }
 
       await databases.createDocument(
