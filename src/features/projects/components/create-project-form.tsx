@@ -23,12 +23,14 @@ import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 interface CreateProjectFormProps {
   onCancel?: () => void;
 }
 
 export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
+  const workspaceId = useWorkspaceId();
   const router = useRouter()
   const { mutate, isPending } = useCreateProject();
 
@@ -44,13 +46,14 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
   const onSubmit = (values: z.infer<typeof createProjectSchema>) => {
     const finalValues = {
       ...values,
+      workspaceId,
       image: values.image instanceof File ? values.image : "",
     };
 
     mutate({ form: finalValues }, {
-      onSuccess: ({ data }) => {
+      onSuccess: () => {
         form.reset();
-        router.push(`/workspaces/${data.$id}`);
+        // TODO: redirect to project screen
       }
     });
   };
