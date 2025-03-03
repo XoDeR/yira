@@ -89,7 +89,7 @@ const app = new Hono()
         PROJECTS_ID,
         [
           Query.equal("workspaceId", workspaceId),
-          Query.orderDesc("$createAt"),
+          Query.orderDesc("$createdAt"),
         ],
       );
 
