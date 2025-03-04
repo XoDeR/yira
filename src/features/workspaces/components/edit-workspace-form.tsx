@@ -102,7 +102,7 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
       form: finalValues,
       param: { workspaceId: initialValues.$id }
     }, {
-      onSuccess: ({ data }) => {
+      onSuccess: () => {
         form.reset();
       }
     });
