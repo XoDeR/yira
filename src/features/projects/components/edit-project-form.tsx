@@ -101,7 +101,7 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
       <DeleteDialog />
       <Card className="w-full h-full border-none shadow-none">
         <CardHeader className="flex flex-row items-center gap-x-4 p-7 space-y-0">
-          <Button size="sm" variant="secondary" onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.workspaceId}/${initialValues.$id}`)}>
+          <Button size="sm" variant="secondary" onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.workspaceId}/projects/${initialValues.$id}`)}>
             <ArrowLeftIcon className="size-4 mr-2" />
             Back
           </Button>
