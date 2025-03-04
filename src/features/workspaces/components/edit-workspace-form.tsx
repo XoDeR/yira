@@ -89,10 +89,6 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
 
     resetInviteCode({
       param: { workspaceId: initialValues.$id },
-    }, {
-      onSuccess: () => {
-        router.refresh();
-      },
     });
   }
 
