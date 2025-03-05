@@ -19,13 +19,13 @@ import { DottedSeparator } from "@/components/dotted-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Project } from "../types";
-import { useUpdateProject } from "../api/use-update-project";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowLeftIcon, CopyIcon, ImageIcon } from "lucide-react";
+import { ArrowLeftIcon, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useConfirm } from "@/hooks/use-confirm";
-import { toast } from "sonner";
+import { useUpdateProject } from "../api/use-update-project";
+import { useDeleteProject } from "../api/use-delete-project";
 
 interface EditProjectFormProps {
   onCancel?: () => void;
@@ -35,14 +35,13 @@ interface EditProjectFormProps {
 export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProps) => {
   const router = useRouter()
   const { mutate, isPending } = useUpdateProject();
-  // TODO
-  // const {
-  //   mutate: deleteWorkspace,
-  //   isPending: isDeletingWorkspace
-  // } = useDeleteWorkspace();
+  const {
+    mutate: deleteProject,
+    isPending: isDeletingProject
+  } = useDeleteProject();
 
   const [DeleteDialog, confirmDelete] = useConfirm(
-    "Delete Workspace",
+    "Delete Project",
     "This action cannot be undone",
     "destructive"
   );
@@ -62,15 +61,14 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
 
     if (!ok) return;
 
-    // TODO
-    // deleteWorkspace({
-    //   param: { workspaceId: initialValues.$id },
-    // }, {
-    //   onSuccess: () => {
-    //     // hard refresh with clearing cache
-    //     window.location.href = "/";
-    //   },
-    // });
+    deleteProject({
+      param: { projectId: initialValues.$id },
+    }, {
+      onSuccess: () => {
+        // hard refresh with clearing cache
+        window.location.href = `/workspaces/${initialValues.workspaceId}`;
+      },
+    });
   }
 
   const onSubmit = (values: z.infer<typeof updateProjectSchema>) => {
