@@ -8,6 +8,7 @@ import {
 } from "@hello-pangea/dnd";
 
 import { Task, TaskStatus } from "../types";
+import { KanbanColumnHeader } from "./kanban-column-header";
 
 const boards: TaskStatus[] = [
   TaskStatus.BACKLOG,
