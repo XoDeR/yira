@@ -9,6 +9,8 @@ import {
 
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { TaskStatus } from "../types";
+import { Button } from "@/components/ui/button";
+import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 
 interface KanbamColumnHeaderProps {
   board: TaskStatus;
@@ -23,13 +25,13 @@ const statusIconMap: Record<TaskStatus, React.ReactNode> = {
     <CircleIcon className="size-[18px] text-red-400" />
   ),
   [TaskStatus.IN_PROGRESS]: (
-    <CircleIcon className="size-[18px] text-yellow-400" />
+    <CircleDotDashedIcon className="size-[18px] text-yellow-400" />
   ),
   [TaskStatus.IN_REVIEW]: (
-    <CircleIcon className="size-[18px] text-blue-400" />
+    <CircleDotIcon className="size-[18px] text-blue-400" />
   ),
   [TaskStatus.DONE]: (
-    <CircleIcon className="size-[18px] text-emerald-400" />
+    <CircleCheckIcon className="size-[18px] text-emerald-400" />
   ),
 };
 
@@ -37,16 +39,24 @@ export const KanbanColumnHeader = ({
   board,
   taskCount
 }: KanbamColumnHeaderProps) => {
+  const { open } = useCreateTaskModal();
+
+  const icon = statusIconMap[board];
+
   return (
     <div className="px-2 py-1.5 flex items-center justify-between">
       <div className="flex items-center gap-x-2">
-        <h2>
+        {icon}
+        <h2 className="text-sm font-medium">
           {snakeCaseToTitleCase(board)}
         </h2>
-        <div>
+        <div className="size-5 flex items-center justify-center rounded-md bg-neutral-200 text-xs text-neutral-700 font-medium">
           {taskCount}
         </div>
       </div>
+      <Button onClick={open} variant="ghost" size="icon" className="size-5">
+        <PlusIcon className="size-4 text-neutral-500" />
+      </Button>
     </div>
-  )
-}
+  );
+};
