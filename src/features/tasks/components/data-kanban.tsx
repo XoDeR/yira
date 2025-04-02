@@ -106,6 +106,20 @@ export const DataKanban = ({
       });
 
       // When task is moved between columns, update position in source column
+      if (sourceStatus !== destStatus) {
+        newTasks[sourceStatus].forEach((task, index) => {
+          if (task) {
+            const newPosition = Math.min((index + 1) * 1000, 1_000_000);
+            if (task.position !== newPosition) {
+              updatesPayload.push({
+                $id: task.$id,
+                status: sourceStatus,
+                position: newPosition,
+              })
+            }
+          }
+        })
+      }
 
     })
   }, [])
