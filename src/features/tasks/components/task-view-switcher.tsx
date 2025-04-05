@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { Loader, PlusIcon } from "lucide-react";
 import { useQueryState } from "nuqs";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import { useTaskFilters } from "../hooks/use-task-filters";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { DataKanban } from "./data-kanban";
+import { TaskStatus } from "../types";
 
 export const TaskViewSwitcher = () => {
   const [{
@@ -39,6 +41,13 @@ export const TaskViewSwitcher = () => {
     status,
     dueDate,
   });
+
+  const onKanbanChange = useCallback((
+    tasks: { $id: string; status: TaskStatus; position: number }[]
+  ) => {
+    // TODO buld update should be here
+    console.log({ tasks });
+  }, []);
 
   return (
     <Tabs
@@ -90,7 +99,7 @@ export const TaskViewSwitcher = () => {
               <DataTable columns={columns} data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
-              <DataKanban data={tasks?.documents ?? []} />
+              <DataKanban onChange={onKanbanChange} data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="calendar" className="mt-0">
               {JSON.stringify(tasks)}
