@@ -25,10 +25,12 @@ type TasksState = {
 
 interface DataKanbanProps {
   data: Task[];
+  onChange: (tasks: { $id: string; status: TaskStatus; position: number }[]) => void;
 }
 
 export const DataKanban = ({
   data,
+  onChange,
 }: DataKanbanProps) => {
   const [tasks, setTasks] = useState<TasksState>(() => {
     const initialTasks: TasksState = {
@@ -49,6 +51,26 @@ export const DataKanban = ({
 
     return initialTasks;
   });
+
+  useEffect(() => {
+    const newTasks: TasksState = {
+      [TaskStatus.BACKLOG]: [],
+      [TaskStatus.TODO]: [],
+      [TaskStatus.IN_PROGRESS]: [],
+      [TaskStatus.IN_REVIEW]: [],
+      [TaskStatus.DONE]: [],
+    };
+
+    data.forEach((task) => {
+      newTasks[task.status].push(task);
+    });
+
+    Object.keys(newTasks).forEach((status) => {
+      newTasks[status as TaskStatus].sort((a, b) => a.position - b.position);
+    });
+
+    setTasks(newTasks);
+  }, [data]);
 
   const onDragEnd = useCallback((result: DropResult) => {
     if (!result.destination) return;
@@ -118,14 +140,17 @@ export const DataKanban = ({
               })
             }
           }
-        })
+        });
       }
 
-    })
-  }, [])
+      return newTasks;
+    });
+
+    onChange(updatesPayload);
+  }, [onChange])
 
   return (
-    <DragDropContext onDragEnd={() => { }}>
+    <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex overflow-x-auto">
         {boards.map((board) => {
           return (
