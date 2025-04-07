@@ -1,0 +1,41 @@
+members
+
+id (Document ID)
+userId required string
+workspaceId required string
+role [ADMIN, MEMBER] required enum
+Created
+Updated
+
+projects
+
+id
+workspaceId required string
+imageUrl string size 1400000 default null
+name required string
+Created
+Updated
+
+tasks
+
+id
+workspaceId required string
+name required string
+projectId required string
+assigneeId required string
+description string
+dueDate required datetime
+status required enum [BACKLOG, TODO, IN_PROGRESS, IN_REVIEW, DONE]
+position required integer min 1000 max 1000000
+Created
+Updated
+
+workspaces
+
+id
+name required string
+userId required string
+imageUrl string size 1400000 default null
+inviteCode required string 
+Created
+Updated
