@@ -12,6 +12,7 @@ import { Task } from "../types";
 import { useState } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./data-calendar.css";
+import { EventCard } from "./event-card";
 
 const locales = {
   "en-US": enUS
@@ -69,6 +70,17 @@ export const DataCalendar = ({
       max={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}
       formats={{
         weekdayFormat: (date, culture, localizer) => localizer?.format(date, "EEE", culture) ?? "",
+      }}
+      components={{
+        eventWrapper: ({ event }) => (
+          <EventCard
+            id={event.id}
+            title={event.title}
+            assignee={event.assignee}
+            project={event.project}
+            status={event.status}
+          />
+        )
       }}
     />
   );
