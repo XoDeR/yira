@@ -2,13 +2,13 @@
 
 import { PageError } from "@/components/page-error";
 import { PageLoader } from "@/components/page-loader";
-import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
-import { EditWorkspaceForm } from "@/features/workspaces/components/edit-workspace-form"
+import { useGetWorkspaceInfo } from "@/features/workspaces/api/use-get-workspace-info";
+import { JoinWorkspaceForm } from "@/features/workspaces/components/join-workspace-form";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
-export const WorkspaceIdSettingsClient = () => {
+export const WorkspaceIdJoinClient = () => {
   const workspaceId = useWorkspaceId();
-  const { data: initialValues, isLoading } = useGetWorkspace({ workspaceId });
+  const { data: initialValues, isLoading } = useGetWorkspaceInfo({ workspaceId });
 
   if (isLoading) {
     return <PageLoader />
@@ -20,7 +20,7 @@ export const WorkspaceIdSettingsClient = () => {
 
   return (
     <div className="w-full lg:max-w-xl">
-      <EditWorkspaceForm initialValues={initialValues} />
+      <JoinWorkspaceForm initialValues={initialValues} />
     </div>
-  )
+  );
 }
