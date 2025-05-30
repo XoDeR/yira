@@ -20,6 +20,7 @@ import Link from "next/link"
 import { Project } from "@/features/projects/types";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { Member } from "@/features/members/types";
+import { MemberAvatar } from "@/features/members/components/member-avatar";
 
 export const WorkspaceIdClient = () => {
   const workspaceId = useWorkspaceId();
@@ -49,6 +50,7 @@ export const WorkspaceIdClient = () => {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <TaskList data={tasks.documents} total={tasks.total} />
         <ProjectList data={projects.documents} total={projects.total} />
+        <MemberList data={members.documents} total={members.total} />
       </div>
     </div>
   );
@@ -195,8 +197,11 @@ export const MemberList = ({ data, total }: MemberListProps) => {
                     name={member.name}
                   />
                   <div className="flex flex-col items-center overflow-hidden">
-                    <p className="text-lg font-medium truncate">
+                    <p className="text-lg font-medium line-clamp-1">
                       {member.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground line-clamp-1">
+                      {member.email}
                     </p>
                   </div>
                 </CardContent>
@@ -204,7 +209,7 @@ export const MemberList = ({ data, total }: MemberListProps) => {
             </li>
           ))}
           <li className="text-sm text-muted-foreground text-center hidden first-of-type:block">
-            No projects found
+            No members found
           </li>
         </ul>
       </div>
