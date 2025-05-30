@@ -19,6 +19,7 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link"
 import { Project } from "@/features/projects/types";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
+import { Member } from "@/features/members/types";
 
 export const WorkspaceIdClient = () => {
   const workspaceId = useWorkspaceId();
@@ -123,17 +124,17 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
 
   return (
     <div className="flex flex-col gap-y-4 col-span-1">
-      <div className="bg-muted rounded-lg p-4">
+      <div className="bg-white border rounded-lg p-4">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold">
             Projects ({total})
           </p>
-          <Button variant="muted" size="icon" onClick={createProject}>
+          <Button variant="secondary" size="icon" onClick={createProject}>
             <PlusIcon className="size-4 text-neutral-400" />
           </Button>
         </div>
         <DottedSeparator className="my-4" />
-        <ul className="flex flex-col gap-y-4">
+        <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {data.map((project) => (
             <li key={project.$id}>
               <Link href={`/workspaces/${workspaceId}/projects/${project.$id}`}>
@@ -154,14 +155,58 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
             </li>
           ))}
           <li className="text-sm text-muted-foreground text-center hidden first-of-type:block">
-            No tasks found
+            No projects found
           </li>
         </ul>
-        <Button variant="muted" className="mt-4 w-full" asChild>
-          <Link href={`/workspaces/${workspaceId}/tasks`}>
-            Show All
-          </Link>
-        </Button>
+      </div>
+    </div>
+  )
+}
+
+interface MemberListProps {
+  data: Member[];
+  total: number;
+}
+
+export const MemberList = ({ data, total }: MemberListProps) => {
+  const workspaceId = useWorkspaceId();
+
+  return (
+    <div className="flex flex-col gap-y-4 col-span-1">
+      <div className="bg-white border rounded-lg p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-lg font-semibold">
+            Members ({total})
+          </p>
+          <Button asChild variant="secondary" size="icon">
+            <Link href={`/workspaces/${workspaceId}/members`}>
+              <SettingsIcon className="size-4 text-neutral-400" />
+            </Link>
+          </Button>
+        </div>
+        <DottedSeparator className="my-4" />
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {data.map((member) => (
+            <li key={member.$id}>
+              <Card className="shadow-none rounded-lg overflow-hidden">
+                <CardContent className="p-3 flex flex-col items-center gap-x-2">
+                  <MemberAvatar
+                    className="size-12"
+                    name={member.name}
+                  />
+                  <div className="flex flex-col items-center overflow-hidden">
+                    <p className="text-lg font-medium truncate">
+                      {member.name}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </li>
+          ))}
+          <li className="text-sm text-muted-foreground text-center hidden first-of-type:block">
+            No projects found
+          </li>
+        </ul>
       </div>
     </div>
   )
